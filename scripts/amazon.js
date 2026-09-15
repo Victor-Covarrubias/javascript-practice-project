@@ -1,4 +1,5 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
+//import * as cartModule from '../data/cart.js';
 
 import {products} from '../data/products.js';
 
@@ -58,44 +59,24 @@ products.forEach((product) => {
 //we insert the list of divs inside the grid of products
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+function updateCartQuantity(){
+	let cartQuantity = 0;
+	cart.forEach((cartItem) => {
+		cartQuantity +=cartItem.quantity;
+	});
+
+	document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+
+	console.log(cart);
+}
+
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 	button.addEventListener('click', () => {
 		//we used a data atribute to identify the product inside the button
 		const productId =  button.dataset.productId;
 
-		let matchingItem;
-		cart.forEach((item) => {
-			if(productId === item.productId){
-				matchingItem = item;
-			}
-		});
-
-		//we get the select
-		const quantitySelector = document.querySelector(
-			`.js-quantity-selector-${productId}`
-		);
-
-		console.log(quantitySelector);
-		//we get the selected value in the select
-		//const quantity = quantitySelector.value; but we need it as a number
-		const quantity = Number(quantitySelector.value);
-
-		if (matchingItem){
-			matchingItem.quantity += quantity;
-		} else{
-			cart.push({
-				productId,
-				quantity
-			});
-		}
+		addToCart(productId);
+		updateCartQuantity();
 	
-		let cartQuantity = 0;
-		cart.forEach((item) => {
-			cartQuantity +=item.quantity;
-		});
-
-		document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-
-		console.log(cart);
 	});
 })
