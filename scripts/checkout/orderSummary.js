@@ -6,10 +6,7 @@ import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 //dafault export when we only want to export 1 thing 
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
-
-//testing the exported functions
-hello();
-const today =  dayjs();
+import {renderPaymentSummary} from './paymentSummary.js';
 
 export function renderOrderSummary(){
     let cartSummaryHTML = '';
@@ -120,6 +117,7 @@ export function renderOrderSummary(){
             const container = document.querySelector(`.js-cart-item-container-${productId}`);
             container.remove();
 
+            renderPaymentSummary();
             updateCartQuantity();
         })
     });
@@ -139,6 +137,7 @@ export function renderOrderSummary(){
 
             //we render the html again (MVC) model view controller
             renderOrderSummary();
+            renderPaymentSummary();
         })
     });
 }
