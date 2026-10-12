@@ -1,18 +1,26 @@
 import {addToCart, cart, loadFromStorage} from "../../data/cart.js";
 
 describe('test suite: addToCart', () => {
-    //had to add this select cuz i had added a way to add more items to the cart before using the selected quantity in amazon.html
-    document.body.innerHTML += `
-        <select class = "js-quantity-selector-bc2847e9-5323-403f-b7cf-57fde044a955">
-            <option selected value="1">1</option>
-            <option value="2">2</option>
-        </select>
-    `;
+    //to create a hook to run soemthing in each test in this case its before each of the its
+    beforeEach(() => {
+        //had to add this select cuz i had added a way to add more items to the cart before using the selected quantity in amazon.html
+        document.querySelector('.js-test-container').innerHTML = `
+            <select class = "js-quantity-selector-bc2847e9-5323-403f-b7cf-57fde044a955">
+                <option selected value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        `;
 
-    it('adds an existing product to the cart', () => {
         //we also have to mock setItem so because its just for this tets
         spyOn(localStorage, 'setItem');
+    });
 
+    afterEach(() => {
+        //to remove the html used for the test
+        document.querySelector('.js-test-container').innerHTML = '';
+    });
+
+    it('adds an existing product to the cart', () => {
         //to replace the local storage with a fake with an empty []
         spyOn(localStorage, 'getItem').and.callFake(() => {
             return JSON.stringify([{
@@ -32,17 +40,7 @@ describe('test suite: addToCart', () => {
         expect(cart[0].quantity).toEqual(2);
     });
 
-
-    //had to add this select cuz i had added a way to add more items to the cart before using the selected quantity in amazon.html
-    document.body.innerHTML += `
-        <select class = "js-quantity-selector-bc2847e9-5323-403f-b7cf-57fde044a955">
-            <option selected value="1">1</option>
-            <option value="2">2</option>
-        </select>
-    `;
     it('adds a new product to the cart', () => {
-        spyOn(localStorage, 'setItem');
-
         //to replace the local storage with a fake with an empty []
         spyOn(localStorage, 'getItem').and.callFake(() => {
             return JSON.stringify([]);
@@ -58,5 +56,3 @@ describe('test suite: addToCart', () => {
         expect(cart[0].quantity).toEqual(1);
     });
 });
-
-
