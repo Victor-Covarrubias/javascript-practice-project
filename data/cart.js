@@ -1,4 +1,4 @@
-//we need to export the variable so that a module can access it
+//we need to export the variable so that a module can access it, we let cart; as a shorcut of cart = undefined;
 export let cart;
 
 //moved all the cart loading from the local storage to a function
