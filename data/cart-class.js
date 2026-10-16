@@ -51,7 +51,6 @@ class Cart {
             `.js-quantity-selector-${productId}`
         );
 
-        console.log(quantitySelector);
         //we get the selected value in the select
         //const quantity = quantitySelector.value; but we need it as a number
         const quantity = Number(quantitySelector.value);
@@ -104,13 +103,10 @@ class Cart {
 
         matchingItem.deliveryOptionId = deliveryOptionId;
 
-        saveToStorage();
+        this.saveToStorage();
     }
 }
 
 //creating instances of the class, the contructor gets the parameters
-const cart = new Cart('cart-oop');
-const businessCart = new Cart('cart-business');
+export const cart = new Cart('cart');
 
-console.log(cart);
-console.log(businessCart);

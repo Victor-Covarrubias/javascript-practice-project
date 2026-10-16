@@ -1,5 +1,6 @@
 //named export when we dont use a default export
-import {cart, removeFromCart, calculateCartQuantity, updateDeliveryOption} from '../../data/cart.js';
+//import {cart, removeFromCart, calculateCartQuantity, updateDeliveryOption} from '../../data/cart.js';
+import {cart} from '../../data/cart-class.js';
 import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
@@ -11,7 +12,7 @@ import {renderPaymentSummary} from './paymentSummary.js';
 export function renderOrderSummary(){
     let cartSummaryHTML = '';
 
-    cart.forEach((cartItem) => {
+    cart.cartItems.forEach((cartItem) => {
         const productId = cartItem.productId;
 
         const matchingProduct = getProduct(productId);
@@ -117,7 +118,7 @@ export function renderOrderSummary(){
     document.querySelectorAll('.js-delete-link').forEach((link) => {
         link.addEventListener('click', () => {
             const productId = link.dataset.productId;
-            removeFromCart(productId);
+            cart.removeFromCart(productId);
             const container = document.querySelector(`.js-cart-item-container-${productId}`);
             container.remove();
 
@@ -130,14 +131,14 @@ export function renderOrderSummary(){
 
     //this is to update the text at the top that says Checkout (n items)
     function updateCartQuantity(){
-        document.querySelector('.js-return-to-home-link').innerHTML = `${calculateCartQuantity()} items`;
+        document.querySelector('.js-return-to-home-link').innerHTML = `${cart.calculateCartQuantity()} items`;
     }
 
     document.querySelectorAll('.js-delivery-option').forEach((element) => {
         element.addEventListener('click', () => {
             //destructuring
             const {productId, deliveryOptionId} = element.dataset;
-            updateDeliveryOption(productId, deliveryOptionId);
+            cart.updateDeliveryOption(productId, deliveryOptionId);
 
             //we render the html again (MVC) model view controller
             renderOrderSummary();
