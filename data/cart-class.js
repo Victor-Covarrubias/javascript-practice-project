@@ -2,18 +2,20 @@
 class Cart {
     //property and value, cartItems = undefined;
     cartItems;
-    localStorageKey;
+    //to make a property private we just add a hash instead of typing private
+    #localStorageKey;
 
     //to add the contructor of the class
     constructor(localStorageKey){
-        this.localStorageKey = localStorageKey;
+        this.#localStorageKey = localStorageKey;
         //moved all the cart loading from the local storage to a function
-        this.loadFromStorage();
+        this.#loadFromStorage();
     }
 
-    loadFromStorage(){
+    //we can also make a private method
+    #loadFromStorage(){
         //instead of using cart.cartItems we use this so there is no problem in case the name of the object changes
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
         //the JSON parse will give a null if its empty so we give a default value
         if (!this.cartItems){
@@ -31,7 +33,7 @@ class Cart {
 
     saveToStorage(){
         //convert the cart into a string to save it in the local storage
-        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
 
     addToCart(productId){
