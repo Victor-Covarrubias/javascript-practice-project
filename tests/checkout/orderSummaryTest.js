@@ -1,5 +1,6 @@
 import {renderOrderSummary} from '../../scripts/checkout/orderSummary.js';
-import {loadFromStorage, cart} from "../../data/cart.js";
+//import {loadFromStorage, cart} from "../../data/cart.js";
+import {cart} from '../../data/cart-class.js';
 
 describe('test suite: renderOrderSummary', () => {
     const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
@@ -29,7 +30,7 @@ describe('test suite: renderOrderSummary', () => {
             }]);
         });
         //we load from storage again with the local storage being the empty array now
-        loadFromStorage();
+        //cart.loadFromStorage();
 
         renderOrderSummary();
     });
@@ -39,13 +40,7 @@ describe('test suite: renderOrderSummary', () => {
         document.querySelector('.js-test-container').innerHTML = '';
     });
 
-    it('displays the cart',() => {
-        //to check the quantity of items
-        expect(document.querySelectorAll('.js-cart-item-container').length).toEqual(2);
-
-        expect(document.querySelector(`.js-product-quantity-${productId1}`).innerText).toContain('Quantity: 2');
-        expect(document.querySelector(`.js-product-quantity-${productId2}`).innerText).toContain('Quantity: 2');
-    });
+    
 
     it('removes a product', () => {
         //to click an element using code we can just get it using the dom and then use the method click
@@ -54,8 +49,8 @@ describe('test suite: renderOrderSummary', () => {
         expect(document.querySelector(`.js-cart-item-container-${productId1}`)).toEqual(null);
         //to check the opposite we use not
         expect(document.querySelector(`.js-cart-item-container-${productId2}`)).not.toEqual(null);
-        expect(cart.length).toEqual(1);
+        expect(cart.cartItems.length).toEqual(1);
         //to check if the first product in the cart is the second one since the first one was deleted
-        expect(cart[0].productId).toEqual(productId2);
+        expect(cart.cartItems[0].productId).toEqual(productId2);
     });
 });

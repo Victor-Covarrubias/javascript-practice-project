@@ -3,7 +3,6 @@
 import {cart} from '../../data/cart-class.js';
 import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
-import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 //dafault export when we only want to export 1 thing 
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
@@ -45,7 +44,7 @@ export function renderOrderSummary(){
                             ${matchingProduct.name}
                         </div>
                         <div class="product-price">
-                            $${formatCurrency(matchingProduct.priceCents)}
+                            ${matchingProduct.getPrice()}
                         </div>
                         <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                             <span>
