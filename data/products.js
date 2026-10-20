@@ -35,6 +35,31 @@ class Product{
   getPrice(){
     return `$${formatCurrency(this.priceCents)}`;
   }
+
+  extraInfoHTML(){
+    //target = _blank so that it appears in a new web tab
+    return '';
+  }
+}
+
+//to use inheritance so it gets all the properties and methods from the class Product
+class Clothing extends Product{
+  sizeChartLink;
+
+  constructor(productDetails){
+    //with super we call the constructor of the parent class just like in java
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  //cause I added the same function to the Product class this is called method overriding
+  extraInfoHTML(){
+    //super.extraInfoHTML();  example of how to use the parent code before
+    //target = _blank so that it appears in a new web tab
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">Size chart</a>
+    `;
+  }
 }
 
 export const products = [
@@ -697,6 +722,9 @@ export const products = [
     ]
   }
 ].map((productDetails) => {
+  if(productDetails.type === 'clothing'){
+    return new Clothing(productDetails);
+  }
   return new Product(productDetails);
 });
 
