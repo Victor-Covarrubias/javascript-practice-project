@@ -109,6 +109,32 @@ object3.method();
 
 */
 
+//Ill load the products from the backend instead of using the array
+export let products = [];
+
+//this is known as a back we give it a function to run/call in the future
+export function loadProducts(fun){
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    //to convert from JSON to objects (array of objects)
+    products = JSON.parse(xhr.response).map((productDetails) => {
+      if(productDetails.type === 'clothing'){
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    //to run the render function
+    fun();
+  });
+
+  xhr.open('GET','https://supersimplebackend.dev/products');
+  xhr.send();
+}
+//loadProducts();
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -774,4 +800,7 @@ export const products = [
   }
   return new Product(productDetails);
 });
+*/
+
+
 
