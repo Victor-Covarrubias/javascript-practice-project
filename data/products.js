@@ -62,6 +62,53 @@ class Clothing extends Product{
   }
 }
 
+/*
+practice with a built-in class
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleTimeString());
+*/
+
+/*
+console.log(this);
+
+this creates an error since the object hasnt been created yet so this doesnt point to anything yet
+const object2 = {
+  a: 2,
+  b: this.a
+};
+*/
+
+function logThis(){
+  console.log(this);
+}
+logThis();
+/*
+to change the value of this
+using call is the same as running the function normally but it let us add
+an extra parameter which is counted as the first one and its the one that
+gives the value to this
+
+this doesnt work in an arrow function, in an arrow function the value of this
+will be wathever the value of this was outside the arrow function, its used
+in cases when we dont wanna change the value of this.
+if we use this inside a normal function itll be automatically changed to undefined
+but using the arrow function we keep the same value
+*/
+
+/*
+logThis.call('hello');
+
+const object3 = {
+  method: () => {
+    console.log(this);
+  }
+}
+
+object3.method();
+
+*/
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
