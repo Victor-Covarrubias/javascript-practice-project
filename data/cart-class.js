@@ -110,3 +110,15 @@ class Cart {
 //creating instances of the class, the contructor gets the parameters
 export const cart = new Cart('cart');
 
+//to practice adding more steps in promises
+export function loadCart(fun){
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+    fun();
+  });
+
+  xhr.open('GET','https://supersimplebackend.dev/cart');
+  xhr.send();
+}

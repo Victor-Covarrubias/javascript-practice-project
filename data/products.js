@@ -79,10 +79,12 @@ const object2 = {
 };
 */
 
+/*
 function logThis(){
   console.log(this);
 }
 logThis();
+*/
 /*
 to change the value of this
 using call is the same as running the function normally but it let us add
@@ -127,6 +129,7 @@ export function loadProducts(fun){
 
     //to run the render function
     fun();
+    console.log('load products');
   });
 
   xhr.open('GET','https://supersimplebackend.dev/products');
