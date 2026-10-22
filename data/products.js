@@ -114,7 +114,36 @@ object3.method();
 //Ill load the products from the backend instead of using the array
 export let products = [];
 
-//this is known as a back we give it a function to run/call in the future
+//function to practice fetch, instead of using a callback to get the response we use a promise
+export function loadProductsFetch(){
+  //another way to create a request | fetch by fdefault creates a get request
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response) => {
+    //we use .json to get the data also it is asynchronous it returns a promise
+    return response.json();
+  }).then((productsData) => {
+    //the data is alredy an array of objects so we didnt need to use .parse to transform the JSON
+    products = productsData.map((productDetails) => {
+      if(productDetails.type === 'clothing'){
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    console.log('load products');
+  });
+
+  return promise;
+}
+/*
+//we can also add more steps like this
+loadProductsFetch().then(() => {
+  console.log('next step');
+});
+*/
+
+//this is known as a callback we give it a function to run/call in the future
 export function loadProducts(fun){
   const xhr = new XMLHttpRequest();
 

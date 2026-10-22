@@ -1,18 +1,13 @@
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary} from "./checkout/paymentSummary.js";
-import { loadProducts } from "../data/products.js";
+import { loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart-class.js";
 //import '../data/backend-practice.js';
 
 //better way to wait for asynchronous code
 Promise.all([
-    new Promise((resolve) => {
-        //this inner function runs immediately
-        loadProducts(() => {
-            //resolve controls when to go to the next step
-            resolve('value1');
-        });
-    }),
+    //we use use the function as it is since its already a promise
+    loadProductsFetch(),
     new Promise((resolve) => {
         loadCart(() => {
             resolve('value2');
