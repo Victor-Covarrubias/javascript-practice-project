@@ -116,7 +116,7 @@ export let products = [];
 
 //function to practice fetch, instead of using a callback to get the response we use a promise
 export function loadProductsFetch(){
-  //another way to create a request | fetch by fdefault creates a get request
+  //another way to create a request | fetch by default creates a get request
   const promise = fetch(
     'https://supersimplebackend.dev/products'
   ).then((response) => {
@@ -132,6 +132,9 @@ export function loadProductsFetch(){
     });
 
     console.log('load products');
+    //if the reequest created with the fetch has an error the catch will catch it its like the normal try and catch
+  }).catch((error) => {
+    console.log('Unexpected error. Please try again later.');
   });
 
   return promise;
@@ -155,10 +158,15 @@ export function loadProducts(fun){
       }
       return new Product(productDetails);
     });
+    console.log('load products');
 
     //to run the render function
     fun();
-    console.log('load products');
+  });
+
+  //in case we get an unexpected error with the http request, this is a separate callback just for errors
+  xhr.addEventListener('error', (error) => {
+    console.log('Unexpected error. Please try again later.');
   });
 
   xhr.open('GET','https://supersimplebackend.dev/products');

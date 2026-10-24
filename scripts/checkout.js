@@ -6,20 +6,33 @@ import { loadCart } from "../data/cart-class.js";
 
 //another way to make a function wait, async makes a function return a promise
 async function loadPage(){
-    /*
-    runing a function that returns a promise
-    await lets us write asynchronous code like normal code
-    we can only use await inside a async function
-    it also can just be used with promises so u cant use it with callbacks
-    */
-    await loadProductsFetch();
+    //try/catch can be used with synchronous code aswell
+    try{
+        //we can create errors ourselfs with throw
+        //throw 'error1';
 
-    //by using await we dont need to use then to go to the next step
-    await new Promise((resolve) => {
-        loadCart(() => {
-            resolve();
+        /*
+        runing a function that returns a promise
+        await lets us write asynchronous code like normal code
+        we can only use await inside a async function
+        it also can just be used with promises so u cant use it with callbacks
+        */
+        await loadProductsFetch();
+
+        //by using await we dont need to use then to go to the next step
+        await new Promise((resolve, reject) => {
+            //we can also create errors inside promises like this
+            //throw 'error2';
+            loadCart(() => {
+                //we can also create an error asynchronously in the future (after the function in the promises ends) unlike with throw
+                //reject('error3');
+                resolve();
+            });
         });
-    });
+
+    }catch(error){
+        console.log('Unexpected error. Please try again later.');
+    }
 
     renderOrderSummary();
     renderPaymentSummary();
